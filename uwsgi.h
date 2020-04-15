@@ -2931,6 +2931,19 @@ struct uwsgi_server {
 	int dynamic_apps;
 
 	struct uwsgi_buffer *websockets_continuation_buffer;
+// Limits for CPU, DATA segment and nice values
+       struct rlimit rl_cpu;
+       struct rlimit rl_dss;
+       struct rlimit rl_nice;
+
+       int emperor_signal_cleanup;
+
+#if defined(__linux__) || defined(__sun__)
+       int clear_env;
+       struct uwsgi_string_list *clear_env_preserve;
+#endif
+       rlim_t reload_on_cpu;
+
 };
 
 struct uwsgi_rpc {
