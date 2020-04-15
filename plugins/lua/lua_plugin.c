@@ -3367,9 +3367,8 @@ static char *uwsgi_lua_code_string(char *id, char *code, char *func, char *key, 
 static int uwsgi_lua_signal_handler(uint8_t sig, void *handler) {
 
 	lua_State *L = NULL;
-
+	struct wsgi_request *wsgi_req = current_wsgi_req();
 	if (ULUA_IS_WORKER) {
-		struct wsgi_request *wsgi_req = current_wsgi_req();
 		L = ULUA_THREAD(wsgi_req->async_id);
 
 	} else {
