@@ -188,7 +188,6 @@ static void sapi_uwsgi_register_variables(zval *track_vars_array TSRMLS_DC)
 {
 	int i;
 	struct wsgi_request *wsgi_req = (struct wsgi_request *) SG(server_context);
-	php_import_environment_variables(track_vars_array TSRMLS_CC);
 
 	if (uphp.server_software) {
 		if (!uphp.server_software_len) uphp.server_software_len = strlen(uphp.server_software);
@@ -213,6 +212,7 @@ static void sapi_uwsgi_register_variables(zval *track_vars_array TSRMLS_DC)
 	php_register_variable_safe("SCRIPT_FILENAME", wsgi_req->file, wsgi_req->file_len, track_vars_array TSRMLS_CC);
 
 	php_register_variable_safe("DOCUMENT_ROOT", wsgi_req->document_root, wsgi_req->document_root_len, track_vars_array TSRMLS_CC);
+	php_import_environment_variables(track_vars_array TSRMLS_CC);
 
 	if (wsgi_req->path_info_len) {
 		char *path_translated = ecalloc(1, wsgi_req->file_len + wsgi_req->path_info_len + 1);
