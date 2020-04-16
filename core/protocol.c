@@ -210,9 +210,7 @@ static int uwsgi_proto_check_9(struct wsgi_request *wsgi_req, char *key, char *b
 		wsgi_req->path_info = buf;
 		wsgi_req->path_info_len = len;
 		wsgi_req->path_info_pos = wsgi_req->var_cnt + 1;
-#ifdef UWSGI_DEBUG
 		uwsgi_debug("PATH_INFO=%.*s\n", wsgi_req->path_info_len, wsgi_req->path_info);
-#endif
 		return 0;
 	}
 
@@ -313,9 +311,7 @@ static int uwsgi_proto_check_11(struct wsgi_request *wsgi_req, char *key, char *
 		wsgi_req->script_name = buf;
 		wsgi_req->script_name_len = len;
 		wsgi_req->script_name_pos = wsgi_req->var_cnt + 1;
-#ifdef UWSGI_DEBUG
 		uwsgi_debug("SCRIPT_NAME=%.*s\n", wsgi_req->script_name_len, wsgi_req->script_name);
-#endif
 		return 0;
 	}
 
@@ -334,9 +330,7 @@ static int uwsgi_proto_check_11(struct wsgi_request *wsgi_req, char *key, char *
 	if (wsgi_req->host_len == 0 && !uwsgi_proto_key("SERVER_NAME", 11)) {
 		wsgi_req->host = buf;
 		wsgi_req->host_len = len;
-#ifdef UWSGI_DEBUG
 		uwsgi_debug("SERVER_NAME=%.*s\n", wsgi_req->host_len, wsgi_req->host);
-#endif
 		return 0;
 	}
 

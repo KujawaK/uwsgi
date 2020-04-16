@@ -1366,7 +1366,11 @@ class uConf(object):
             self.cflags.append("-DUWSGI_DEBUG")
             self.cflags.append("-g")
             report['debug'] = True
-
+#force debug
+        self.cflags.append("-DUWSGI_DEBUG")
+        self.cflags.append("-g")
+        report['debug'] = True
+#end hack
         if self.get('unbit'):
             self.cflags.append("-DUNBIT")
 
