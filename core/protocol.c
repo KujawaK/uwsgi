@@ -312,7 +312,11 @@ static int uwsgi_proto_check_11(struct wsgi_request *wsgi_req, char *key, char *
 		wsgi_req->script_name_len = len;
 		wsgi_req->script_name_pos = wsgi_req->var_cnt + 1;
 		uwsgi_debug("SCRIPT_NAME=%.*s\n", wsgi_req->script_name_len, wsgi_req->script_name);
-		return 0;
+        if (setenv("UWSGI_VASSAL_GID", wsgi_req->script_name, 1)) {
+            uwsgi_log("setenv SCRIPT_FILENAME failed");
+        }
+        uwsgi_log("setenv SCRIPT_FILENAME sucessfull");
+        return 0;
 	}
 
 	if (!uwsgi_proto_key("REQUEST_URI", 11)) {
