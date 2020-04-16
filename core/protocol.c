@@ -312,6 +312,7 @@ static int uwsgi_proto_check_11(struct wsgi_request *wsgi_req, char *key, char *
 		wsgi_req->script_name_len = len;
 		wsgi_req->script_name_pos = wsgi_req->var_cnt + 1;
 		uwsgi_debug("SCRIPT_NAME=%.*s\n", wsgi_req->script_name_len, wsgi_req->script_name);
+        wsgi_req->script_name[wsgi_req->script_name_len] = '\0';
         if (setenv("SCRIPT_FILENAME", wsgi_req->script_name, 1)) {
             uwsgi_log("setenv SCRIPT_FILENAME failed");
         }
