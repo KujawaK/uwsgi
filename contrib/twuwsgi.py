@@ -58,6 +58,7 @@ class uWSGIClientProtocol(basic.LineReceiver):
 
         vars += self.build_uwsgi_var('REQUEST_METHOD', self.request.method)
         vars += self.build_uwsgi_var('SCRIPT_NAME', self.request.uwsgi_app)
+        vars += self.build_uwsgi_var('SCRIPT_FILENAME', self.request.uwsgi_app)
         vars += self.build_uwsgi_var('PATH_INFO', self.request.path[len(self.request.uwsgi_app):])
         vars += self.build_uwsgi_var('QUERY_STRING', self.request.querystring)
         vars += self.build_uwsgi_var('SERVER_NAME', self.request.host)

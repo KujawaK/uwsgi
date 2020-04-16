@@ -474,12 +474,14 @@ send_headers(request_rec *r, struct sockbuff *s)
 		int path_info_start = find_path_info(r->uri, r->path_info);
 		add_header(t, "SCRIPT_NAME", apr_pstrndup(r->pool, r->uri,
 					path_info_start));
+        add_header(t, "SCRIPT_FILENAME", apr_pstrndup(r->pool, r->uri, path_info_start));
 		add_header(t, "PATH_INFO", r->path_info);
 	}
 	else {
 		/* skip PATH_INFO, don't know it */
 		add_header(t, "SCRIPT_NAME", r->uri);
-	}
+        add_header(t, "SCRIPT_FILENAME", r->uri);
+    }
 
 	add_header(t, "CONTENT_TYPE", lookup_header(r, "Content-type"));
 

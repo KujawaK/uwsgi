@@ -150,10 +150,12 @@ static int uwsgi_send_headers(request_rec *r, proxy_conn_rec *conn)
     if (script_name && path_info) {
         if (strcmp(path_info, "/")) {
             apr_table_set(r->subprocess_env, "SCRIPT_NAME", apr_pstrndup(r->pool, script_name, strlen(script_name)-strlen(path_info)));
-	}
+            apr_table_set(r->subprocess_env, "SCRIPT_FILENAME", apr_pstrndup(r->pool, script_name, strlen(script_name)-strlen(path_info)));
+        }
         else {
             if (!strcmp(script_name, "/")) {
                 apr_table_set(r->subprocess_env, "SCRIPT_NAME", "");
+                apr_table_set(r->subprocess_env, "SCRIPT_FILENAME", "NULL");
             }
         }
     }

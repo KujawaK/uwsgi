@@ -191,6 +191,7 @@ module Rack
         env.delete "HTTP_CONTENT_TYPE"
 
         env["SCRIPT_NAME"] = ""  if env["SCRIPT_NAME"] == "/"
+        env["SCRIPT_FILENAME"] = "NULL" if env["SCRIPT_NAME"] == "/"
         env["QUERY_STRING"] ||= ""
         env["HTTP_VERSION"] ||= env["SERVER_PROTOCOL"]
         env["REQUEST_PATH"] ||= "/"

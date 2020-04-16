@@ -379,11 +379,13 @@ static int uwsgi_handler(request_rec *r) {
 	// SCRIPT_NAME = "/" is like SCRIPT_NAME = ""
 	if (c->script_name[0] != 0 && !(c->script_name[0] == '/' && c->script_name[1] == 0)) {
 		vecptr = uwsgi_add_var(uwsgi_vars, vecptr, r, "SCRIPT_NAME", c->script_name, &pkt_size) ;
-		vecptr = uwsgi_add_var(uwsgi_vars, vecptr, r, "PATH_INFO", r->uri+strlen(c->script_name), &pkt_size) ;
+        vecptr = uwsgi_add_var(uwsgi_vars, vecptr, r, "SCRIPT_FILENAME", c->script_name, &pkt_size) ;
+        vecptr = uwsgi_add_var(uwsgi_vars, vecptr, r, "PATH_INFO", r->uri+strlen(c->script_name), &pkt_size) ;
 	}
 	else {
 		vecptr = uwsgi_add_var(uwsgi_vars, vecptr, r, "SCRIPT_NAME", "", &pkt_size) ;
-		vecptr = uwsgi_add_var(uwsgi_vars, vecptr, r, "PATH_INFO", r->uri, &pkt_size) ;
+        vecptr = uwsgi_add_var(uwsgi_vars, vecptr, r, "SCRIPT_FILENAME", "NULL", &pkt_size) ;
+        vecptr = uwsgi_add_var(uwsgi_vars, vecptr, r, "PATH_INFO", r->uri, &pkt_size) ;
 	}
 
 
@@ -418,6 +420,7 @@ static int uwsgi_handler(request_rec *r) {
 	h = (apr_table_entry_t*) headers->elts;
 	for (i = 0; i < headers->nelts; ++i) {
 		vecptr = uwsgi_add_var(uwsgi_vars, vecptr, r, h[i].key, h[i].val, &pkt_size) ;
+		uwsgi_log("enviroment varialbes add: %s %s", h[i].key, h[i].val);
 	}	
 	
 
